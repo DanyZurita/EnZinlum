@@ -1,6 +1,6 @@
 package enzinium;
 
 
-public class Address {
+public class AddressTest {
     
 }
