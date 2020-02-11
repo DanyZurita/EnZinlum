@@ -64,8 +64,6 @@ public class TokenContract {
         if (balance.get(PK) == null){
             return 0.0;
         }
-        else {
-            return balance.get(PK);
-        }
+        return balance.get(PK);
     }
 }
