@@ -2,18 +2,22 @@ package enzinium;
 
 import java.security.PublicKey;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class TokenContract {
     
+    
     private String name;
     private String symbol;
     private Double totalSupply;
-    private final Address address;
-    private HashMap<PublicKey, Double> balance = new HashMap<PublicKey, Double>();
+    private final Address owner;
+    private PublicKey ownerPK;
+    private Map<PublicKey, Double> balances = new HashMap<PublicKey, Double>();
 
-    public TokenContract(Address rick) {
-        this.address = rick;
+    public TokenContract(Address owner) {
+        this.owner = owner;
+        this.ownerPK = owner.getPK();
     }
 
     
@@ -31,15 +35,23 @@ public class TokenContract {
     }
     
     public String name() {
-        return name;
+        return this.name;
     }
     
     public String symbol() {
-        return symbol;
+        return this.symbol;
     }
     
     public Double totalSupply() {
-        return totalSupply;
+        return this.totalSupply;
+    }
+    
+    public Address owner() {
+        return this.owner;
+    }
+    
+    public  Map<PublicKey, Double> balances() {
+        return this.balances;
     }
     
     @Override
@@ -48,22 +60,41 @@ public class TokenContract {
         description.append("Name = ").append(name()).append('\n');
         description.append("Symbol = ").append(symbol()).append('\n');
         description.append("TotalSupply = ").append(totalSupply()).append('\n');
-        description.append("Owner PK = ").append(address.getPK().hashCode()).append('\n');
+        description.append("Owner PK = ").append(this.ownerPK.hashCode()).append('\n');
         return description.toString();
     }
     
     public void addOwner(PublicKey PK, Double units) {
-        balance.put(PK, units);
+        balances().put(PK, units);
     }
     
     public int numOwners() {
-        return balance.size();
+        return balances().size();
     }
     
     public Double balanceOf(PublicKey PK) {
-        if (balance.get(PK) == null){
+        if (balances().get(PK) == null){
             return 0.0;
         }
-        return balance.get(PK);
+        return balances().get(PK);
+    }
+    
+    public void tranfer(PublicKey PK, Double units){
+        try {
+            Boolean stockable = false;
+            if (balanceOf(owner().getPK()) >= units) {
+                stockable = true;
+            }
+            require(stockable);
+            balances().get(owner().getPK()) -= units;
+        }
+        catch (Exception e) {}
+        
+    }
+    
+    private void require(Boolean holds) throws Exception {
+        if (! holds) {
+            throw new Exception();
+        }
     }
 }

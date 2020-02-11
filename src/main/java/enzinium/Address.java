@@ -6,11 +6,11 @@ import java.security.PublicKey;
 
 
 public class Address {
-    public PublicKey PK;
+    private PublicKey PK;
     private PrivateKey SK;
-    protected Double balance = 0.0;
-    public String symbol = "EZI";
-    public GenSig sig;
+    private Double balance = 0.0;
+    private final String symbol = "EZI";
+    private GenSig sig;
          
     
     public Address() {
@@ -28,12 +28,16 @@ public class Address {
     public String toString(){
         StringBuilder description = new StringBuilder();
         description.append("PK = ").append(PK.hashCode()).append('\n');
-        description.append("Balacne = ").append(balance).append(" ").append(symbol);
+        description.append("Balacne = ").append(balance()).append(" ").append(symbol);
         return description.toString();
     }
     
     public void addEZI(Double EZI) {
-        balance += EZI;
+        balance() += EZI;
+    }
+    
+    public Double balance() {
+        return this.balance;
     }
     
     public void transferEZI(Double EZI) {
