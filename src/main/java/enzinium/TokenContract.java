@@ -1,8 +1,7 @@
 package enzinium;
 
 import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 
 public class TokenContract {
@@ -11,7 +10,7 @@ public class TokenContract {
     private String symbol;
     private Double totalSupply;
     private final Address address;
-    private Hashtable<PublicKey, Double> balance = new Hashtable<PublicKey, Double>();
+    private HashMap<PublicKey, Double> balance = new HashMap<PublicKey, Double>();
 
     public TokenContract(Address rick) {
         this.address = rick;
@@ -54,6 +53,10 @@ public class TokenContract {
     }
     
     public void addOwner(PublicKey PK, Double units) {
-        balance
+        balance.put(PK, units);
+    }
+    
+    public int numOwners() {
+        return balance.size();
     }
 }
