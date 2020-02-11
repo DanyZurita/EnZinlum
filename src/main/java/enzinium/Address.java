@@ -39,4 +39,12 @@ public class Address {
     public void transferEZI(Double EZI) {
         
     }
+    
+    public void sendEZI(TokenContract contract, Double EZI) {
+        
+    }
+    
+    public int getPK() {
+        return PK.hashCode();
+    }
 }
