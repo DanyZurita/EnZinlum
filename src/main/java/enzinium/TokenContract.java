@@ -1,13 +1,17 @@
 package enzinium;
 
+import java.security.PublicKey;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 
 public class TokenContract {
     
     private String name;
     private String symbol;
-    private float totalSupply;
+    private Double totalSupply;
     private final Address address;
-    private balance
+    private Hashtable<PublicKey, Double> balance = new Hashtable<PublicKey, Double>();
 
     public TokenContract(Address rick) {
         this.address = rick;
@@ -23,7 +27,8 @@ public class TokenContract {
     }
     
     public void setTotalSupply(float totalSupplyInput) {
-        totalSupply = totalSupplyInput;
+        double totalSupplyDouble = totalSupplyInput;
+        totalSupply = totalSupplyDouble;
     }
     
     public String name() {
@@ -34,7 +39,7 @@ public class TokenContract {
         return symbol;
     }
     
-    public float totalSupply() {
+    public Double totalSupply() {
         return totalSupply;
     }
     
@@ -44,7 +49,11 @@ public class TokenContract {
         description.append("Name = ").append(name()).append('\n');
         description.append("Symbol = ").append(symbol()).append('\n');
         description.append("TotalSupply = ").append(totalSupply()).append('\n');
-        description.append("Owner PK = ").append(address.getPK()).append('\n');
+        description.append("Owner PK = ").append(address.getPK().hashCode()).append('\n');
         return description.toString();
+    }
+    
+    public void addOwner(PublicKey PK, Double units) {
+        balance
     }
 }

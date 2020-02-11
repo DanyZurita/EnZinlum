@@ -44,7 +44,7 @@ public class Address {
         
     }
     
-    public int getPK() {
-        return PK.hashCode();
+    public PublicKey getPK() {
+        return PK;
     }
 }
