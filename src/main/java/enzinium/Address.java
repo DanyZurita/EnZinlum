@@ -6,7 +6,7 @@ import java.security.PublicKey;
 
 
 public class Address {
-    private PublicKey PK;
+    public PublicKey PK;
     private PrivateKey SK;
     protected Double balance = 0.0;
     public String symbol = "EZI";
@@ -27,8 +27,8 @@ public class Address {
     @Override
     public String toString(){
         StringBuilder description = new StringBuilder();
-        description.append("PK =").append(PK.hashCode()).append('\n');
-        description.append("Balacne = ").append(balance).append(symbol);
+        description.append("PK = ").append(PK.hashCode()).append('\n');
+        description.append("Balacne = ").append(balance).append(" ").append(symbol);
         return description.toString();
     }
     
