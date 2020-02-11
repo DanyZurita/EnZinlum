@@ -59,4 +59,13 @@ public class TokenContract {
     public int numOwners() {
         return balance.size();
     }
+    
+    public Double balanceOf(PublicKey PK) {
+        if (balance.get(PK) == null){
+            return 0.0;
+        }
+        else {
+            return balance.get(PK);
+        }
+    }
 }
