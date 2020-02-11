@@ -33,7 +33,7 @@ public class Address {
     }
     
     public void addEZI(Double EZI) {
-        balance() += EZI;
+        this.balance += EZI;
     }
     
     public Double balance() {
