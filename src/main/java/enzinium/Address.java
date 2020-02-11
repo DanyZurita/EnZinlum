@@ -26,10 +26,10 @@ public class Address {
     
     @Override
     public String toString(){
-        StringBuilder addressDescription = new StringBuilder();
-        addressDescription.append("PK =").append(PK.hashCode()).append('\n');
-        addressDescription.append("Balacne = ").append(balance).append(symbol);
-        return addressDescription.toString();
+        StringBuilder description = new StringBuilder();
+        description.append("PK =").append(PK.hashCode()).append('\n');
+        description.append("Balacne = ").append(balance).append(symbol);
+        return description.toString();
     }
     
     public void addEZI(Double EZI) {
