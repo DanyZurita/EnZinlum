@@ -79,7 +79,7 @@ public class TokenContract {
         return balances().get(PK);
     }
     
-    public void tranfer(PublicKey PK, Double units){
+    public void transfer(PublicKey PK, Double units){
         try {
             Boolean stockable = false;
             if (balanceOf(owner().getPK()) >= units) {
