@@ -4,7 +4,7 @@ apply plugin: 'application'
 
     group = 'edu.elsmancs'
 
-mainClassName = 'edu.elsmancs.EnZinlum.App'
+mainClassName = 'enzinium.App'
 
 repositories {
     jcenter()
