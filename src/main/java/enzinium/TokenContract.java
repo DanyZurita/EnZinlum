@@ -86,7 +86,10 @@ public class TokenContract {
                 stockable = true;
             }
             require(stockable);
-            balances().get(owner().getPK()) -= units;
+            Double ownerBalance = balances().get(owner().getPK());
+            ownerBalance -= units;
+            Double receptorBalance = balances().get(PK);
+            receptorBalance += units;
         }
         catch (Exception e) {}
         
