@@ -12,8 +12,8 @@ public class TokenContract {
     private String symbol;
     private Double totalSupply;
     private final Address owner;
-    private PublicKey ownerPK;
-    private Map<PublicKey, Double> balances = new HashMap<PublicKey, Double>();
+    private final PublicKey ownerPK;
+    private final Map<PublicKey, Double> balances = new HashMap<PublicKey, Double>();
 
     public TokenContract(Address owner) {
         this.owner = owner;
@@ -79,7 +79,7 @@ public class TokenContract {
         return balances().get(PK);
     }
     
-    public void transfer(PublicKey PK, Double units){
+    public void transfer(PublicKey receptor, Double units){
         try {
             Boolean stockable = false;
             if (balanceOf(owner().getPK()) >= units) {
@@ -88,8 +88,11 @@ public class TokenContract {
             require(stockable);
             Double ownerBalance = balances().get(owner().getPK());
             ownerBalance -= units;
-            Double receptorBalance = balances().get(PK);
+            balances().put(owner().getPK(), ownerBalance);
+            
+            Double receptorBalance = balances().get(receptor);
             receptorBalance += units;
+            balances().put(receptor, receptorBalance);
         }
         catch (Exception e) {}
         
@@ -99,5 +102,24 @@ public class TokenContract {
         if (! holds) {
             throw new Exception();
         }
+    }
+    
+    public void transfer(PublicKey sender,PublicKey receptor, Double units){
+        try {
+            Boolean stockable = false;
+            if (balanceOf(sender) >= units) {
+                stockable = true;
+            }
+            require(stockable);
+            Double senderBalance = balances().get(sender);
+            senderBalance -= units;
+            balances().put(sender, senderBalance);
+            
+            Double receptorBalance = balances().get(receptor);
+            receptorBalance += units;
+            balances().put(receptor, receptorBalance);
+        }
+        catch (Exception e) {}
+        
     }
 }
