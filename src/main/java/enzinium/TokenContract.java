@@ -115,12 +115,23 @@ public class TokenContract {
     
     public void owners() {
         for (PublicKey pk : balances().keySet()) {
-            StringBuilder balanceString = new StringBuilder();
-            balanceString.append("Owner: ").append(pk.hashCode()).append(" ");
-            balanceString.append(balanceOf(pk)).append(" ");
-            balanceString.append(symbol()).append('\n');
-            System.out.print(balanceString);
+            if (!pk.equals(owner().getPK())) {
+                StringBuilder balanceString = new StringBuilder();
+                balanceString.append("Owner: ").append(pk.hashCode()).append(" ");
+                balanceString.append(balanceOf(pk)).append(" ");
+                balanceString.append(symbol()).append('\n');
+                System.out.print(balanceString);
+            }
+        } 
+    }
+    
+    public int totalTokensSold() {
+        int contador = 0;
+        for (PublicKey pk : balances().keySet()) {
+            if (!pk.equals(owner().getPK())) {
+                contador += balanceOf(pk);
+            }
         }
-        
+        return contador;
     }
 }
