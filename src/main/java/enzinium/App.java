@@ -235,6 +235,110 @@ public class App {
          *         y el numero de tokens que han adquirido
          */
 
+        System.out.println("\n" + "Lista de compradores" + "\n" + 
+                                  "===================="        );
+        ricknillos.owners();
         
+        /**
+         * Calcula el numero de asistentes al concierto (excluyendo a Rick),
+         * es decir, el numero de entradas vendidas.
+         * 
+         * totalTokensSold()
+         * @return numero de tokens (entradas) vendidos
+         */
+
+        System.out.println("\n" + "Total de asistentes: " 
+                                    + ricknillos.totalTokensSold() + "\n");
+
+        
+        /**
+         * AHORA A POR EL EXCEL·LENT !!
+         * CAN DO !!
+         */
+
+        /**
+         * Vamos a comprar entradas con nuestra moneda enZinium.
+         * 
+         * Añade 20 enZiniums a la direccion de Morty:
+         * 
+         * transferEZI()
+         * @param address del receptor
+         * @param cantidad de enZiniums
+         * Añade la cantidad de EZi al balance de EZI en
+         * la dirección del receptor.
+         */
+
+        morty.transferEZI(20d);
+
+        System.out.println("\n" + "Recarga eZis de Morty" + "\n" + 
+                                  "====================="        );
+        System.out.println(morty.toString());
+
+        /** 
+         * Morty Compra 2 entradas a 5 enZiniums cada una:
+         * envia una transferencia al contrato de ricknillo 
+         * por valor de 10 enZiniums:
+         * 
+         * send()
+         * @param contrato
+         * @param enziniums
+         * Esta funcion envia esa cantidad de enziniums
+         * al contrato (¡si la direccion dispone de suficientes enziniums!)
+         * y actualiza el balance de Morty
+         * 
+         * La funcion send() llama a la funcion payable() del contrato:
+         * 
+         * payable()
+         * @param direccion del receptor de los tokens /entradas
+         * @param cantidad de enziniums
+         * Esta funcion calcula cuantas entradas se pueden comprar 
+         * con esa cantidad de enziniums y llama a la funcion
+         * transfer() del contrato para actualizar los balances 
+         * de Morty (el receptor) y Rick (el vendedor, propietario
+         * del contrato).
+         * 
+         * Finalmente, la funcion payable() del contrato le envia
+         * los enZinium al propietario del contrato (Rick) mediante
+         * la funcion transfer() de Address:
+         * 
+         * transferEZI()
+         * @param address del receptor
+         * @param cantidad de enZiniums
+         * Actualiza el balance de EZI en la dirección del receptor
+         * de esos enZiniums
+         */
+
+        morty.send(ricknillos, 10d);
+
+        ricknillos.owners();
+        System.out.println("Owner: " + rick.getPK().hashCode() + " " 
+                                     + ricknillos.balanceOf(rick.getPK())
+                                     + " "
+                                     + ricknillos.symbol());
+
+        System.out.println("\n" + "Address de Rick" + "\n" + 
+                                  "==============="        );
+        System.out.println(rick.toString());
+        System.out.println("\n" + "Address de Morty" + "\n" + 
+                                  "==============="        );
+        System.out.println(morty.toString());
+
+        // verifica que Morty no tiene dinero para comprar una entrada
+        morty.send(ricknillos, 3d);
+
+        System.out.println("Morty no paga suficientes EZI por una entrada" +
+                            "\n => sigue teniendo 5 entradas: " 
+                                + ricknillos.balanceOf(morty.getPK())
+                                + " "
+                                + ricknillos.symbol());
+
+        System.out.println("\n" + "y Rick no recibe EZI => sigue con 10: " 
+                                        + rick.getBalance()
+                                        + "\n");
+
+        System.out.println("y Rick sigue con sus 94 entradas: " 
+                                            + ricknillos.balanceOf(rick.getPK())
+                                            + " "
+                                            + ricknillos.symbol());
     }
 }

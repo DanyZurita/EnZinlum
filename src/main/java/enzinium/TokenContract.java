@@ -86,7 +86,6 @@ public class TokenContract {
                 stockable = true;
             }
             require(stockable);
-<<<<<<< HEAD
             balances().compute(owner().getPK(), (pk, tokens) -> tokens - units);
             balances().put(receptor, balanceOf(receptor) + units);
         }
@@ -103,15 +102,6 @@ public class TokenContract {
             require(stockable);
             balances().put(sender, balanceOf(sender) - units);
             balances().put(receptor, balanceOf(receptor) + units);
-=======
-            Double ownerBalance = balances().get(owner().getPK());
-            ownerBalance -= units;
-            balances().put(owner().getPK(), ownerBalance);
-            
-            Double receptorBalance = balances().get(receptor);
-            receptorBalance += units;
-            balances().put(receptor, receptorBalance);
->>>>>>> 65cddef13cbf24960dee06073a55796ccc4dab06
         }
         catch (Exception e) {}
         
@@ -123,7 +113,6 @@ public class TokenContract {
         }
     }
     
-<<<<<<< HEAD
     public void owners() {
         for (PublicKey pk : balances().keySet()) {
             StringBuilder balanceString = new StringBuilder();
@@ -132,25 +121,6 @@ public class TokenContract {
             balanceString.append(symbol()).append('\n');
             System.out.print(balanceString);
         }
-    
-=======
-    public void transfer(PublicKey sender,PublicKey receptor, Double units){
-        try {
-            Boolean stockable = false;
-            if (balanceOf(sender) >= units) {
-                stockable = true;
-            }
-            require(stockable);
-            Double senderBalance = balances().get(sender);
-            senderBalance -= units;
-            balances().put(sender, senderBalance);
-            
-            Double receptorBalance = balances().get(receptor);
-            receptorBalance += units;
-            balances().put(receptor, receptorBalance);
-        }
-        catch (Exception e) {}
         
->>>>>>> 65cddef13cbf24960dee06073a55796ccc4dab06
     }
 }
