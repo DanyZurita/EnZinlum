@@ -79,14 +79,29 @@ public class TokenContract {
         return balances().get(PK);
     }
     
-    public void tranfer(PublicKey PK, Double units){
+    public void transfer(PublicKey receptor, Double units){
         try {
             Boolean stockable = false;
             if (balanceOf(owner().getPK()) >= units) {
                 stockable = true;
             }
             require(stockable);
-            balances().get(owner().getPK()) -= units;
+            balances().compute(owner().getPK(), (pk, tokens) -> tokens - units);
+            balances().put(receptor, balanceOf(receptor) + units);
+        }
+        catch (Exception e) {}
+        
+    }
+    
+    public void transfer(PublicKey sender, PublicKey receptor, Double units){
+        try {
+            Boolean stockable = false;
+            if (balanceOf(sender) >= units) {
+                stockable = true;
+            }
+            require(stockable);
+            balances().put(sender, balanceOf(sender) - units);
+            balances().put(receptor, balanceOf(receptor) + units);
         }
         catch (Exception e) {}
         
@@ -96,5 +111,16 @@ public class TokenContract {
         if (! holds) {
             throw new Exception();
         }
+    }
+    
+    public void owners() {
+        for (PublicKey pk : balances().keySet()) {
+            StringBuilder balanceString = new StringBuilder();
+            balanceString.append("Owner: ").append(pk.hashCode()).append(" ");
+            balanceString.append(balanceOf(pk)).append(" ");
+            balanceString.append(symbol()).append('\n');
+            System.out.print(balanceString);
+        }
+    
     }
 }
