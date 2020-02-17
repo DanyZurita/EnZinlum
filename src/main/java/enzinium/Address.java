@@ -14,7 +14,7 @@ public class Address {
          
     
     public Address() {
-    
+ 
     }
     
     public void generateKeyPair() {
@@ -28,7 +28,7 @@ public class Address {
     public String toString(){
         StringBuilder description = new StringBuilder();
         description.append("PK = ").append(PK.hashCode()).append('\n');
-        description.append("Balacne = ").append(balance()).append(" ").append(symbol);
+        description.append("Balacne = ").append(getBalance()).append(" ").append(symbol);
         return description.toString();
     }
     
@@ -36,16 +36,19 @@ public class Address {
         this.balance += EZI;
     }
     
-    public Double balance() {
+    public Double getBalance() {
         return this.balance;
     }
     
     public void transferEZI(Double EZI) {
-        
+        addEZI(EZI);
     }
     
-    public void sendEZI(TokenContract contract, Double EZI) {
-        
+    public void send(TokenContract contract, Double enziniums) {
+        if (enziniums <= getBalance()) {
+            contract.payable(getPK(), enziniums);
+            this.balance -= enziniums;
+        }
     }
     
     public PublicKey getPK() {

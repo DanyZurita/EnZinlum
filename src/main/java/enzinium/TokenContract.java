@@ -8,12 +8,13 @@ import java.util.Map;
 public class TokenContract {
     
     
-    private String name;
-    private String symbol;
-    private Double totalSupply;
+    private String name = null;
+    private String symbol = null;
+    private Double totalSupply= 0.0;
     private final Address owner;
     private final PublicKey ownerPK;
     private final Map<PublicKey, Double> balances = new HashMap<PublicKey, Double>();
+    private Double tokenPrice = 0.0;
 
     public TokenContract(Address owner) {
         this.owner = owner;
@@ -52,6 +53,10 @@ public class TokenContract {
     
     public  Map<PublicKey, Double> balances() {
         return this.balances;
+    }
+    
+    private Double getTokenPrice() {
+        return this.tokenPrice;
     }
     
     @Override
@@ -134,4 +139,16 @@ public class TokenContract {
         }
         return contador;
     }
+    
+    public void payable(PublicKey receptor, Double coins) {
+        try {
+            require(coins >= getTokenPrice());
+            Double units = Math.floor(coins / tokenPrice);
+            transfer(receptor, units);
+            this.owner.transferEZI(coins);
+        } 
+        catch (Exception e) {}
+    }
 }
+
+    
